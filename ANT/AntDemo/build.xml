@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="AntDemo" basedir="." default="deploywar">
+
+   <property file="build.properties"/>
+   
+   <property name="src.dir" value="src"/>
+  
+   <property name="build.dir" value="${WebContent.dir}/WEB-INF/classes"/>
+   
+   <property name="name" value="AntDemo"/>
+
+  
+ <path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="compile" depends="init" >
+		<javac destdir="build/classes" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+	
+	<target name="war" depends="compile">
+		<war destfile="dist/AntDemo.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent"/>
+			<lib dir="WebContent/WEB-INF/lib"/>
+			<classes dir="build/classes"/>
+		</war>
+	</target>
+	
+	
+   <target name="deploywar" depends="war" description="Deploy application as a WAR file">
+   
+         <copy file="dist/AntDemo.war" todir="C:\apache-tomcat-7.0.78\webapps" preservelastmodified="true">
+		 
+        <!-- <fileset dir="dist">
+            <include name="*.war"/>
+         </fileset> -->
+      </copy>
+   </target>
+   
+    <target name="clean">
+		<delete dir="dist" />
+		<delete dir="build" />
+	</target>
+   
+   </project> 
+   
+   
+   <!--
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project default="warTarget" basedir=".">
+<property file="build.properties"/>
+
+<property name="tomcat" value="C:\Program Files\Apache Software Foundation\Tomcat 8.5"/>
+<property name="tomcat.deployment" value="${tomcat}/webapps"/>
+<property name="tomcat.bin" value="${tomcat}/bin"/>
+<property name="base" value="."/>
+<property name="source" value="${base}/WebContent"/>
+
+<target name="warTarget">
+<war warfile="antdemo.war" needxmlfile="false">
+<fileset dir="${source}/WEB-INF"/>
+</war>
+<antcall target="deployTarget"/>
+</target>
+
+<target name="deployTarget">
+<copy file="${base}/antdemo.war" todir="${tomcat.deployment}"/>
+</target>
+
+</project>
+
+-->
+  
