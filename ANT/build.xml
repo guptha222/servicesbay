@@ -8,7 +8,7 @@
    </target>
    
    
-  <!-- this is depends option in target --> 
+  this is depends option in target 
   <!-- <target name="deploy" depends="package">
 	<echo>deploy depends package</echo>
 	</target>
